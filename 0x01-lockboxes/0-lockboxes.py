@@ -2,6 +2,10 @@
 # Interview task
 
 def canUnlockAll(boxes):
+    """Documentation
+    Arg:
+        boxes(list): args
+    """
     n = len(boxes)
     unlocked = set([0])  # Start with the first box unlocked
     keys = set(boxes[0])  # Keys from the first box
