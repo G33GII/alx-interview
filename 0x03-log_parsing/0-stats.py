@@ -10,15 +10,16 @@ def print_stats(total_size, status_codes):
         if status_codes[code] > 0:
             print(f"{code}: {status_codes[code]}")
 
+
 def parse_line(line):
-    pattern = r'^(
-        \d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[(.+)\
+    pattern = r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[(.+)\
             ] "GET /projects/260 HTTP/1.1" (\d{3}) (\d+)$'
     match = re.match(pattern, line)
     if match:
         ip, date, status, file_size = match.groups()
         return int(status), int(file_size)
     return None, None
+
 
 def main():
     total_size = 0
@@ -39,6 +40,7 @@ def main():
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
         raise
+
 
 if __name__ == "__main__":
     main()
