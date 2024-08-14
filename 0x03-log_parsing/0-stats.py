@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Pycode"""
+
 import sys
 import re
 from collections import defaultdict
