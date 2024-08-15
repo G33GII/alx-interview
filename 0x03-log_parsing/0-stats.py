@@ -16,8 +16,7 @@ def print_stats(total_size, status_codes):
 def parse_line(line):
     pattern1 = r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
     pattern2 = r' - \[(.+)\] "GET /projects/260 HTTP/1.1" (\d{3}) (\d+)$'
-    pattern = r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6})\] "GET /projects/\d+ HTTP/1\.1" (\d{3}) (\d+)$'
-    # pattern1 + pattern2
+    pattern = pattern1 + pattern2
     match = re.match(pattern, line)
     if match:
         ip, date, status, file_size = match.groups()
