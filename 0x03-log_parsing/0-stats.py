@@ -58,7 +58,8 @@ def main():
     try:
         for line in sys.stdin:
             status, file_size = parse_line(line.strip())
-            if status is not None and isinstance(status, int) and file_size is not None:
+            if status is not None and isinstance(
+                status, int) and file_size is not None:
                 total_size += file_size
                 status_codes[status] += 1
                 line_count += 1
