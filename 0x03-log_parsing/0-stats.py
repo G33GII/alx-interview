@@ -26,8 +26,8 @@ status_counts = {200: 0, 301: 0, 400: 0,
 # Regular expression to match the log line format
 log_pattern = re.compile(
     r'^'
-    r'(\d{1,3}\.){3}\d{1,3}'
-    r' - '
+    r'((\b\d{1,3}\.){3}\d{1,3}\b|\b\w+\b)'
+    r' ?- ?'
     r'\[.*\]'
     r' "GET /projects/260 HTTP/1\.1"'
     r' (\d{3})'
@@ -40,10 +40,12 @@ line_count = 0
 
 try:
     for line in sys.stdin:
+
         match = log_pattern.match(line)
         if match:
-            status_code = int(match.group(2))
-            file_size = int(match.group(3))
+            print(match.group(3), match.group(4))
+            status_code = int(match.group(3))
+            file_size = int(match.group(4))
 
             total_size += file_size
 
