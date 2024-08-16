@@ -43,7 +43,6 @@ try:
 
         match = log_pattern.match(line)
         if match:
-            print(match.group(3), match.group(4))
             status_code = int(match.group(3))
             file_size = int(match.group(4))
 
