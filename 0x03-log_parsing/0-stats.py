@@ -35,12 +35,24 @@ def parse_line(line):
     tuple: A tuple containing the status code and file size as integers,
            or (None, None) if the line doesn't match the expected format.
     """
-    pattern1 = r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
-    pattern2 = r' - \[(.+)\] "GET /projects/260 HTTP/1.1" (\d{3}) (\d+)$'
-    pattern = pattern1 + pattern2
-    match = re.match(pattern, line)
-    if match:
-        ip, date, status, file_size = match.groups()
+    # Regular expression to match the expected log line format
+    ipaddress = r'^(\b(?:\d{1,3}\.){3}\d{1,3}\b)'
+    underscore = r' - '
+    timestamp = r'\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6})\]'
+    httprequest = r' GET /projects/260 HTTP/1\.1'
+    statuscode = r' (\d{3})'
+    size = r' (\d+)$'
+    pattern = ipaddress + underscore + timestamp + httprequest + statuscode + size
+
+    compiled = re.compile(pattern)
+    matches  = compiled.finditer(line)
+
+    if matches:
+        # Since there are now more capturing groups, we need to extract the correct ones
+        # ip, date, status, file_size = match.groups()
+        for match in matches:
+            if match:
+                status, file_size = match.group(3), match.group(4)
         return int(status), int(file_size)
     return None, None
 
@@ -60,11 +72,12 @@ def main():
             status, file_size = parse_line(line.strip())
             if status is not None and isinstance(status, int
                                                  ) and file_size is not None:
+                # print(status,  file_size)
                 total_size += file_size
                 status_codes[status] += 1
                 line_count += 1
 
-                if line_count % 10 == 0:
+                if line_count % 10 == 0 or not sys.stdin.isatty():
                     print_stats(total_size, status_codes)
 
     except KeyboardInterrupt:
@@ -74,3 +87,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
