@@ -31,8 +31,7 @@ log_pattern = re.compile(
     r'\[.*\]'
     r' "GET /projects/260 HTTP/1\.1"'
     r' (\d{3})'
-    r' (\d+)$',
-
+    r' (\d+)$'
 )
 
 
@@ -40,7 +39,6 @@ line_count = 0
 
 try:
     for line in sys.stdin:
-
         match = log_pattern.match(line)
         if match:
             status_code = int(match.group(3))
@@ -55,6 +53,15 @@ try:
 
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
+        else:
+            # status_code = int(match.group(3))
+            # file_size = int(match.group(4))
+            # print(file_size)
+            # total_size += file_size
+            found = re.search(r'\s(\d+)$', line)
+            if found:
+                file_size = int(found.group(1))
+                total_size += file_size
 
     # Print stats if the loop exits naturally (e.g., EOF)
     print_stats(total_size, status_counts)
