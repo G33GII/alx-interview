@@ -3,24 +3,38 @@ import sys
 import signal
 import re
 
+
 def print_stats(total_size, status_counts):
     print(f"File size: {total_size}")
     for code in sorted(status_counts.keys()):
         if status_counts[code] > 0:
             print(f"{code}: {status_counts[code]}")
 
+
 def handler(signum, frame):
     print_stats(total_size, status_counts)
     sys.exit(0)
+
 
 # Set up the signal handler for SIGINT (Ctrl+C)
 signal.signal(signal.SIGINT, handler)
 
 total_size = 0
-status_counts = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+status_counts = {200: 0, 301: 0, 400: 0,
+                 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 
 # Regular expression to match the log line format
-log_pattern = re.compile(r'^(\d{1,3}\.){3}\d{1,3} - \[.*\] "GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$')
+log_pattern = re.compile(
+    r'^'
+    r'(\d{1,3}\.){3}\d{1,3}'
+    r' - '
+    r'\[.*\]'
+    r' "GET /projects/260 HTTP/1\.1"'
+    r' (\d{3})'
+    r' (\d+)$',
+
+)
+
 
 line_count = 0
 
