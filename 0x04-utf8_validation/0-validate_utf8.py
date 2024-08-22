@@ -1,20 +1,26 @@
 #!/usr/bin/python3
-"""Function to check if a list of integers represents a valid UTF-8 encoding.
+"""Function to check if a list of integers
+represents a valid UTF-8 encoding.
 """
 
+
 def validUTF8(data):
-    """Checks if the provided data list contains a valid UTF-8 encoding.
+    """Checks if the provided data list
+    contains a valid UTF-8 encoding.
 
     Args:
-        data (list of int): List of integers where each integer represents a byte.
+        data (list of int): List of integers
+        where each integer represents a byte.
 
     Returns:
-        bool: True if the data is a valid UTF-8 encoding, False otherwise.
+        bool: True if the data is a valid UTF-8
+        encoding, False otherwise.
     """
     # Number of bytes in the current UTF-8 character
     n_bytes = 0
 
-    # Mask to check if the most significant bit (8th bit from the left) is set or not
+    # Mask to check if the most significant
+    # bit (8th bit from the left) is set or not
     mask1 = 1 << 7
 
     # Mask to check if the second most significant bit is set or not
