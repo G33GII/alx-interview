@@ -30,6 +30,7 @@ def validUTF8(data):
         # Get only the 8 least significant bits of the number
         byte = num & 0xFF
 
+        # If it's the start of a new UTF-8 character
         if n_bytes == 0:
             # Determine how many bytes the UTF-8 character has
             mask = mask1
@@ -44,12 +45,15 @@ def validUTF8(data):
             # Invalid scenarios
             if n_bytes == 1 or n_bytes > 4:
                 return False
+
+            # Account for the first byte
+            n_bytes -= 1
         else:
             # Check if the byte is a valid continuation byte
-            if not byte & mask1 and not byte & mask2:
+            if not (byte & mask1 and not (byte & mask2)):
                 return False
 
-        n_bytes -= 1
+            n_bytes -= 1
 
     # Check if all characters were complete
     return n_bytes == 0
