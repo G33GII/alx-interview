@@ -64,7 +64,8 @@ def print_solutions(solutions: List[List[Tuple[int, int]]], n: int) -> None:
     Print all solutions in a readable chessboard format.
 
     Args:
-        solutions (List[List[Tuple[int, int]]]): List of all solutions to be printed.
+        solutions (List[List[Tuple[int, int]]]):
+        List of all solutions to be printed.
         n (int): Size of the chessboard.
     """
     for solution in solutions:
